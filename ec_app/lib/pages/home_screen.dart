@@ -1,14 +1,37 @@
+import 'package:ec_app/pages/cart_page.dart';
 import 'package:ec_app/pages/home_page.dart';
+import 'package:ec_app/pages/profile_page.dart';
+import 'package:ec_app/pages/shop_page.dart';
+import 'package:ec_app/utils/nav_bar.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   void goHome(BuildContext context) {
     Navigator.pop(context);
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return const HomePage();
     }));
+  }
+
+  final List<Widget> _pages = [
+    const ShopPage(),
+    const CartPage(),
+    const ProfilePage()
+  ];
+
+  int _selectedIndex = 0;
+
+  void changeButtomNavBar(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   @override
@@ -71,8 +94,10 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: const Center(
-        child: Text("Home page"),
+      body: _pages[_selectedIndex],
+      bottomNavigationBar: BottomNavBar(
+        selectedIndex: _selectedIndex,
+        changeNavBar: changeButtomNavBar,
       ),
     );
   }
