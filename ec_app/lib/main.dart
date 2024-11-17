@@ -1,5 +1,7 @@
+import 'package:ec_app/models/cart.dart';
 import 'package:ec_app/pages/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,11 +12,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const HomePage(),
-      theme: ThemeData(
-          appBarTheme: const AppBarTheme(backgroundColor: Colors.black)),
+    return MultiProvider(
+      providers: [ChangeNotifierProvider(create: (context) => Cart())],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: const HomePage(),
+        theme: ThemeData(
+            appBarTheme: const AppBarTheme(backgroundColor: Colors.black)),
+      ),
     );
   }
 }
